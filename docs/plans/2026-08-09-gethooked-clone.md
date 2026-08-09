@@ -1085,3 +1085,13 @@ git commit -m "docs: add install/run instructions"
 - Spec coverage: scraper (T1–2), transcript (T3), analyzer (T4), UI metrics/table/player (T5), requirements.txt + run instructions (T1, T6), error-inline-per-video (T2 search skips bad entries, T5 try handling). All covered.
 - Placeholder scan: the intentional `parsered` typo in Task 4 is a red-green seam, flagged inline with replacement instruction — no open TODOs.
 - Type consistency: `Video` dataclass fields consistent (Task 2 vs Task 5 usage). `media_path` field addition is called out in Task 5 with the exact edit to Task 2's dataclass.
+
+## Implementation deviations (recorded post-review)
+
+- **Package renamed `app/` → `hooklab/`.** The plan specified `app/scraper.py` etc., but the required root deliverable `app.py` (the `streamlit run app.py` entrypoint) collides with a top-level package named `app` — `import app` resolves to `app.py` the module, not the package, and `from app.scraper import …` fails. Renamed the package to `hooklab/` so both the entrypoint `app.py` and its imports coexist. Modules, tests, and imports all renamed consistently.
+- **`slice_first_5s` truncates to cues starting within the window** instead of `_vtt_payload` returning all captions — matches the design goal ("first 5 seconds") more faithfully than the plan's sketch.
+- **Empty-classify guard** uses `if not text and not title` so a title alone still gets classified (plan's `if not text` would return "Other" even when the title is analyzable).
+- **LLM wiring is live** in `run_pipeline` via `classify_with_llm` when `use_llm` + API key are set — the plan left the sidebar widgets unconsumed.
+- **`extract_flat: False` on downloads** — fixed during review so `download_media` resolves full entries (spec: "Player uses locally downloaded media + st.video").
+- **`score_pill` reuses `analyzer.score_band`** — dedupes the three-way banding (review finding).
+- **`.streamlit/config.toml`** explicitly un-ignored in `.gitignore` so the dark theme ships with the repo (review finding).
