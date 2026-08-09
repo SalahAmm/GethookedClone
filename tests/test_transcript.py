@@ -1,7 +1,7 @@
 import pytest
 
-from app.scraper import Video
-from app.transcript import get_first_5s, slice_first_5s
+from hooklab.scraper import Video
+from hooklab.transcript import get_first_5s, slice_first_5s
 
 VTT = """WEBVTT
 

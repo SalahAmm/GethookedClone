@@ -1,6 +1,6 @@
 import pytest
 
-from app.scraper import (
+from hooklab.scraper import (
     Video,
     build_search_url,
     download_audio,

@@ -1,6 +1,6 @@
 import json
 
-from app.analyzer import HOOK_TYPES, Analysis, classify, classify_with_llm, score_band
+from hooklab.analyzer import HOOK_TYPES, Analysis, classify, classify_with_llm, score_band
 
 
 def test_classify_question():
