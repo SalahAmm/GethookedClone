@@ -7,7 +7,7 @@ venv/
 env/
 
 # Streamlit
-.streamlit/
+.streamlit/*
 !.streamlit/config.toml
 
 # caches
