@@ -81,6 +81,7 @@ def _make_ydl(outdir: Optional[str] = None) -> YoutubeDL:
             {
                 "outtmpl": os.path.join(outdir, "%(id)s.%(ext)s"),
                 "skip_download": False,
+                "extract_flat": False,
             }
         )
     return YoutubeDL(opts)
@@ -110,16 +111,18 @@ def search_videos(keyword: str, platform: str, limit: int, ydl=None) -> list:
     return videos
 
 
-def download_media(video: Video, outdir: str, ydl=None) -> str:
+def _download_and_locate(video: Video, outdir: str, ydl) -> str:
     os.makedirs(outdir, exist_ok=True)
-    ydl = ydl or _make_ydl(outdir)
     ydl.extract_info(video.url, download=True)
     matches = glob(os.path.join(outdir, f"{video.id}.*"))
     return matches[0] if matches else ""
 
 
+def download_media(video: Video, outdir: str, ydl=None) -> str:
+    return _download_and_locate(video, outdir, ydl or _make_ydl(outdir))
+
+
 def download_audio(video: Video, outdir: str, ydl=None) -> str:
-    os.makedirs(outdir, exist_ok=True)
     opts = {
         "format": "bestaudio/best",
         "outtmpl": os.path.join(outdir, "%(id)s.%(ext)s"),
@@ -127,7 +130,4 @@ def download_audio(video: Video, outdir: str, ydl=None) -> str:
         "no_warnings": True,
         "noplaylist": True,
     }
-    ydl = ydl or YoutubeDL(opts)
-    ydl.extract_info(video.url, download=True)
-    matches = glob(os.path.join(outdir, f"{video.id}.*"))
-    return matches[0] if matches else ""
+    return _download_and_locate(video, outdir, ydl or YoutubeDL(opts))

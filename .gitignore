@@ -8,6 +8,7 @@ env/
 
 # Streamlit
 .streamlit/
+!.streamlit/config.toml
 
 # caches
 .pytest_cache/

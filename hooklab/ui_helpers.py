@@ -4,6 +4,8 @@ import collections
 
 import streamlit as st
 
+from hooklab.analyzer import score_band
+
 CSS = """
 <style>
 :root {
@@ -53,8 +55,7 @@ def build_metrics(rows: list[dict]) -> dict:
 
 
 def score_pill(score: int) -> str:
-    band = "hot" if score >= 8 else "warm" if score >= 6 else "weak"
-    return f'<span class="pill {band}">{score}/10</span>'
+    return f'<span class="pill {score_band(score)}">{score}/10</span>'
 
 
 def inject_css():
