@@ -59,6 +59,17 @@ Pattern Interrupt, Curiosity Gap, Negative Constraint, Story Hook, Bold Claim, Q
 - Live yt-dlp calls skipped in unit tests via a network stub. An opt-in `--live` marker runs real fetches.
 - LLM path tested with a fake client; heuristic path is the deterministic default asserted in CI.
 
+## Visual direction
+
+Style: data-dense dark "edit bay" dashboard. No marketing surface — purely an analysis tool, so no marketing-copy skills applied.
+
+- Background near-black `#0E1117`; surface `#1A1D24`; border `#2A2E38`.
+- Accent **hook-red** `#FF3D5A` (the "hook" identity — used on scores, active states, primary actions); secondary teal `#22D3EE` for data highlights.
+- A metric card (Total Videos / Avg Score / Top Hook) with big Fira Code numerals; a hook score badge per video colored by band (red = strong 8-10, amber = 6-7, gray = weak).
+- Typography: Fira Code for numbers/scores/data, Fira Sans for body — dashboard feel, precise, technical.
+- Layout: sticky sidebar controls, three KPI cards, sortable table, expandable video cards (thumbnail + `st.video` + transcript + hook breakdown).
+- Implemented via Streamlit theme in `.streamlit/config.toml` + targeted CSS injection for cards/badges. Dark mode only; full WCAG AA contrast.
+
 ## Out of scope (v1)
 
 - User accounts/auth, persistence/database layer (in-memory session only).
